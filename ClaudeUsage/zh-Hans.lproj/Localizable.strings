@@ -19,6 +19,7 @@
 "settings.general.interval.5min" = "5 分钟";
 "settings.general.launchAtLogin" = "开机自动启动";
 "settings.general.language" = "语言";
+"settings.general.notifications" = "用量提醒";
 "settings.logout" = "退出登录";
 
 // 语言
@@ -79,3 +80,8 @@
 "keychain.readFailed" = "Keychain 读取失败（%d）";
 "keychain.deleteFailed" = "Keychain 删除失败（%d）";
 "keychain.dataConversionFailed" = "Keychain 数据转换失败";
+
+// 通知
+"notification.fiveHour.title" = "5 小时用量提醒";
+"notification.sevenDay.title" = "7 天用量提醒";
+"notification.body" = "当前用量 %d%%，已达到 %d%% 阈值";

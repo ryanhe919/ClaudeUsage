@@ -19,6 +19,7 @@
 "settings.general.interval.5min" = "5 min";
 "settings.general.launchAtLogin" = "Launch at Login";
 "settings.general.language" = "Language";
+"settings.general.notifications" = "Usage Alerts";
 "settings.logout" = "Log Out";
 
 // Language
@@ -79,3 +80,8 @@
 "keychain.readFailed" = "Keychain read failed (%d)";
 "keychain.deleteFailed" = "Keychain delete failed (%d)";
 "keychain.dataConversionFailed" = "Keychain data conversion failed";
+
+// Notifications
+"notification.fiveHour.title" = "5-Hour Usage Alert";
+"notification.sevenDay.title" = "7-Day Usage Alert";
+"notification.body" = "Current usage %d%%, reached %d%% threshold";

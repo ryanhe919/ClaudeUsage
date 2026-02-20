@@ -37,6 +37,7 @@ final class UsageViewModel: ObservableObject {
         }
 
         Task {
+            NotificationManager.shared.requestPermission()
             syncConfigurationState()
             if isConfigured {
                 startAutoRefresh()
@@ -112,7 +113,7 @@ final class UsageViewModel: ObservableObject {
         usageResponse = nil
         errorMessage = nil
         stopAutoRefresh()
-
+        NotificationManager.shared.resetThresholds()
     }
 
     // MARK: - 数据刷新
@@ -133,6 +134,12 @@ final class UsageViewModel: ObservableObject {
             let summary = buildSummary(from: response)
             usageSummary = summary
             lastRefreshTime = Date()
+
+            // 检查阈值通知
+            NotificationManager.shared.checkAndNotify(
+                fiveHourUtilization: response.fiveHour?.utilization ?? 0,
+                sevenDayUtilization: response.sevenDay?.utilization ?? 0
+            )
         } catch let error as ClaudeAPIError {
             errorMessage = error.errorDescription
         } catch {

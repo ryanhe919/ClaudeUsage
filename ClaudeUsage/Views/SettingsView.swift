@@ -17,6 +17,7 @@ struct SettingsView: View {
     @State private var selectedInterval: TimeInterval = 300
     @State private var didAppear = false
     @State private var launchAtLogin: Bool = SMAppService.mainApp.status == .enabled
+    @State private var notificationsEnabled: Bool = NotificationManager.shared.isEnabled
     @State private var isValidating: Bool = false
     @State private var validationMessage: String?
     @State private var validationSuccess: Bool = false
@@ -195,6 +196,19 @@ struct SettingsView: View {
                                 }
                             }
                         }
+                    }
+            }
+
+            HStack {
+                Text("settings.general.notifications")
+                    .font(.caption)
+                Spacer()
+                Toggle("", isOn: $notificationsEnabled)
+                    .labelsHidden()
+                    .toggleStyle(.switch)
+                    .controlSize(.small)
+                    .onChange(of: notificationsEnabled) { _, newValue in
+                        NotificationManager.shared.isEnabled = newValue
                     }
             }
 
