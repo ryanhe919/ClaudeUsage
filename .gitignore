@@ -1,0 +1,13 @@
+# Xcode user-specific
+xcuserdata/
+
+# Claude Code
+.claude/
+CLAUDE.md
+
+# macOS
+.DS_Store
+
+# Swift Package Manager
+.build/
+.swiftpm/
