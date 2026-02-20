@@ -9,9 +9,21 @@ import SwiftUI
 
 @main
 struct ClaudeUsageApp: App {
+    @StateObject private var viewModel = UsageViewModel()
+    @State private var localizationManager = LocalizationManager.shared
+
     var body: some Scene {
-        WindowGroup {
-            ContentView()
+        MenuBarExtra {
+            MenuBarView(viewModel: viewModel)
+                .environment(\.locale, localizationManager.currentLocale)
+        } label: {
+            HStack(spacing: 4) {
+                Image(systemName: "brain.head.profile")
+                Text(viewModel.statusText)
+                    .monospacedDigit()
+            }
+            .environment(\.locale, localizationManager.currentLocale)
         }
+        .menuBarExtraStyle(.window)
     }
 }

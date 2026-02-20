@@ -1,0 +1,81 @@
+// General
+"app.name" = "Claude Usage";
+
+// Settings
+"settings.title" = "Settings";
+"settings.auth.title" = "Authentication";
+"settings.auth.cookie" = "Cookie";
+"settings.auth.cookie.placeholder" = "Paste full Cookie string...";
+"settings.auth.cookie.hint1" = "Login claude.ai → DevTools → Cookie → Copy All";
+"settings.auth.cookie.hint2" = "Auto-extracts sessionKey and lastActiveOrg";
+"settings.auth.validate" = "Verify & Save";
+"settings.auth.success" = "Verified successfully!";
+"settings.auth.failure" = "Verification failed, please check Cookie";
+"settings.general.title" = "General";
+"settings.general.refreshInterval" = "Refresh Interval";
+"settings.general.interval.5s" = "5 sec";
+"settings.general.interval.30s" = "30 sec";
+"settings.general.interval.1min" = "1 min";
+"settings.general.interval.5min" = "5 min";
+"settings.general.launchAtLogin" = "Launch at Login";
+"settings.general.language" = "Language";
+"settings.logout" = "Log Out";
+
+// Language
+"language.system" = "System";
+
+// Menu bar main view
+"menu.loading" = "Fetching usage data...";
+"menu.retry" = "Retry";
+"menu.notConfigured.title" = "Not Configured";
+"menu.notConfigured.message" = "Set up Session Cookie and Organization ID to start monitoring usage.";
+"menu.notConfigured.action" = "Configure";
+"menu.refresh" = "Refresh";
+"menu.settings" = "Settings";
+"menu.quit" = "Quit";
+"menu.lastUpdate" = "Last updated: ";
+
+// Dashboard
+"dashboard.fiveHour.window" = "5-Hour Window · Resets in %@";
+"dashboard.fiveHour" = "5-Hour Usage";
+"dashboard.sevenDay" = "7-Day Usage";
+"dashboard.opus" = "Opus (7d)";
+"dashboard.sonnet" = "Sonnet (7d)";
+"dashboard.cowork" = "Cowork (7d)";
+"dashboard.oauthApps" = "OAuth Apps";
+"dashboard.extraUsage" = "Extra Usage";
+"dashboard.resetIn" = "Resets in %@";
+
+// Gauge
+"gauge.used" = "Used";
+
+// Time formats
+"time.unknown" = "Unknown";
+"time.resettingSoon" = "Resetting soon";
+"time.daysHours" = "%dd %dh";
+"time.hoursMinutes" = "%dh %dm";
+"time.minutes" = "%dm";
+
+// Error messages
+"error.invalidCookie" = "Invalid Cookie, please reconfigure";
+"error.unauthorized" = "Authentication expired, please update Cookie";
+"error.network" = "Network error: %@";
+"error.decoding.keyNotFound" = "Decoding error: missing field \"%@\" (%@)";
+"error.decoding.typeMismatch" = "Decoding error: type mismatch %@ (%@)";
+"error.decoding.valueNotFound" = "Decoding error: null value %@ (%@)";
+"error.decoding.general" = "Decoding error: %@";
+"error.server" = "Server error (%d)";
+"error.unknown" = "Unknown error: %@";
+"error.noOrgID" = "Organization ID not found, please check settings";
+"error.sessionKeyNotFound" = "sessionKey not found in Cookie";
+"error.orgIDNotFound" = "lastActiveOrg not found in Cookie";
+"error.saveFailed" = "Save failed: %@";
+"error.configFailed" = "Configuration save failed, please retry";
+"error.needCookie" = "Please configure Cookie first";
+"error.refreshFailed" = "Refresh failed: %@";
+
+// Keychain
+"keychain.saveFailed" = "Keychain save failed (%d)";
+"keychain.readFailed" = "Keychain read failed (%d)";
+"keychain.deleteFailed" = "Keychain delete failed (%d)";
+"keychain.dataConversionFailed" = "Keychain data conversion failed";

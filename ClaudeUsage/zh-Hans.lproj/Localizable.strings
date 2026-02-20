@@ -1,0 +1,81 @@
+// 通用
+"app.name" = "Claude Usage";
+
+// 设置页
+"settings.title" = "设置";
+"settings.auth.title" = "认证信息";
+"settings.auth.cookie" = "Cookie";
+"settings.auth.cookie.placeholder" = "粘贴完整 Cookie 字符串...";
+"settings.auth.cookie.hint1" = "浏览器登录 claude.ai → 开发者工具 → Cookie → 复制全部";
+"settings.auth.cookie.hint2" = "自动提取 sessionKey 和 lastActiveOrg";
+"settings.auth.validate" = "验证并保存";
+"settings.auth.success" = "验证成功！";
+"settings.auth.failure" = "验证失败，请检查 Cookie";
+"settings.general.title" = "常规";
+"settings.general.refreshInterval" = "刷新间隔";
+"settings.general.interval.5s" = "5 秒";
+"settings.general.interval.30s" = "30 秒";
+"settings.general.interval.1min" = "1 分钟";
+"settings.general.interval.5min" = "5 分钟";
+"settings.general.launchAtLogin" = "开机自动启动";
+"settings.general.language" = "语言";
+"settings.logout" = "退出登录";
+
+// 语言
+"language.system" = "跟随系统";
+
+// 菜单栏主视图
+"menu.loading" = "正在获取用量数据...";
+"menu.retry" = "重试";
+"menu.notConfigured.title" = "尚未配置";
+"menu.notConfigured.message" = "请设置 Session Cookie 和 Organization ID 以开始监控用量。";
+"menu.notConfigured.action" = "开始配置";
+"menu.refresh" = "刷新";
+"menu.settings" = "设置";
+"menu.quit" = "退出";
+"menu.lastUpdate" = "上次更新：";
+
+// 仪表盘
+"dashboard.fiveHour.window" = "5 小时窗口 · %@后重置";
+"dashboard.fiveHour" = "5 小时用量";
+"dashboard.sevenDay" = "7 天用量";
+"dashboard.opus" = "Opus (7天)";
+"dashboard.sonnet" = "Sonnet (7天)";
+"dashboard.cowork" = "协作 (7天)";
+"dashboard.oauthApps" = "OAuth Apps";
+"dashboard.extraUsage" = "额外用量";
+"dashboard.resetIn" = "%@后重置";
+
+// 仪表组件
+"gauge.used" = "已使用";
+
+// 时间格式
+"time.unknown" = "未知";
+"time.resettingSoon" = "即将重置";
+"time.daysHours" = "%d天%d小时";
+"time.hoursMinutes" = "%d小时%d分钟";
+"time.minutes" = "%d分钟";
+
+// 错误信息
+"error.invalidCookie" = "Cookie 无效，请重新设置";
+"error.unauthorized" = "认证已过期，请更新 Cookie";
+"error.network" = "网络错误：%@";
+"error.decoding.keyNotFound" = "数据解析错误：缺少字段 \"%@\" (%@)";
+"error.decoding.typeMismatch" = "数据解析错误：类型不匹配 %@ (%@)";
+"error.decoding.valueNotFound" = "数据解析错误：值为空 %@ (%@)";
+"error.decoding.general" = "数据解析错误：%@";
+"error.server" = "服务器错误（%d）";
+"error.unknown" = "未知错误：%@";
+"error.noOrgID" = "未找到 Organization ID，请检查设置";
+"error.sessionKeyNotFound" = "Cookie 中未找到 sessionKey";
+"error.orgIDNotFound" = "Cookie 中未找到 lastActiveOrg";
+"error.saveFailed" = "保存失败：%@";
+"error.configFailed" = "配置保存失败，请重试";
+"error.needCookie" = "请先设置 Cookie";
+"error.refreshFailed" = "刷新失败：%@";
+
+// Keychain
+"keychain.saveFailed" = "Keychain 保存失败（%d）";
+"keychain.readFailed" = "Keychain 读取失败（%d）";
+"keychain.deleteFailed" = "Keychain 删除失败（%d）";
+"keychain.dataConversionFailed" = "Keychain 数据转换失败";
