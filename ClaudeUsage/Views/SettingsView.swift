@@ -81,8 +81,29 @@ struct SettingsView: View {
                 .font(.subheadline.bold())
                 .foregroundStyle(.secondary)
 
+            // 检测到本地 Claude Code 登录时的提示
+            if viewModel.usingClaudeCodeLogin {
+                HStack(alignment: .top, spacing: 6) {
+                    Image(systemName: "checkmark.seal.fill")
+                        .font(.caption)
+                        .foregroundStyle(.green)
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("settings.auth.claudeCode.detected")
+                            .font(.caption.bold())
+                        Text("settings.auth.claudeCode.hint")
+                            .font(.caption2)
+                            .foregroundStyle(.tertiary)
+                    }
+                }
+                .padding(8)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .background(Color.green.opacity(0.1), in: RoundedRectangle(cornerRadius: 8))
+            }
+
             VStack(alignment: .leading, spacing: 4) {
-                Text("settings.auth.cookie")
+                Text(viewModel.usingClaudeCodeLogin
+                     ? "settings.auth.cookie.optional"
+                     : "settings.auth.cookie")
                     .font(.caption.bold())
 
                 HStack(spacing: 6) {

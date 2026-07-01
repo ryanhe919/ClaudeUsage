@@ -5,6 +5,9 @@
 "settings.title" = "Settings";
 "settings.auth.title" = "Authentication";
 "settings.auth.cookie" = "Cookie";
+"settings.auth.cookie.optional" = "Cookie (optional)";
+"settings.auth.claudeCode.detected" = "Claude Code login detected";
+"settings.auth.claudeCode.hint" = "Using your local Claude Code credentials — no manual Cookie needed. The token is refreshed automatically by Claude Code.";
 "settings.auth.cookie.placeholder" = "Paste full Cookie string...";
 "settings.auth.cookie.hint1" = "Login claude.ai → DevTools → Cookie → Copy All";
 "settings.auth.cookie.hint2" = "Auto-extracts sessionKey and lastActiveOrg";
@@ -60,6 +63,8 @@
 // Error messages
 "error.invalidCookie" = "Invalid Cookie, please reconfigure";
 "error.unauthorized" = "Authentication expired, please update Cookie";
+"error.oauthExpired" = "Claude Code login expired — run claude once in your terminal to refresh it";
+"error.rateLimited" = "Too many requests, please try again later";
 "error.network" = "Network error: %@";
 "error.decoding.keyNotFound" = "Decoding error: missing field \"%@\" (%@)";
 "error.decoding.typeMismatch" = "Decoding error: type mismatch %@ (%@)";

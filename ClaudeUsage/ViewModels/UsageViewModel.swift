@@ -22,6 +22,8 @@ final class UsageViewModel: ObservableObject {
     @Published var isConfigured = false
     @Published var lastRefreshTime: Date?
     @Published var refreshInterval: TimeInterval = 300
+    /// 是否正在使用本地 Claude Code 登录（而非手动 Cookie）
+    @Published var usingClaudeCodeLogin = false
 
     // MARK: - 私有属性
 
@@ -57,9 +59,14 @@ final class UsageViewModel: ObservableObject {
 
     /// 仅检查凭据是否存在，不触发网络请求
     func syncConfigurationState() {
+        // 优先检测本地 Claude Code 登录（读钥匙串，首次会弹一次授权框）
+        let hasClaudeCode = ClaudeCodeCredentials.isAvailable
+        usingClaudeCodeLogin = hasClaudeCode
+
         let hasCookie = CookieManager.shared.hasCookie
         let hasOrgID = CookieManager.shared.hasOrganizationID
-        isConfigured = hasCookie && hasOrgID
+        // Claude Code 登录可用时无需手动 Cookie / orgID
+        isConfigured = hasClaudeCode || (hasCookie && hasOrgID)
     }
 
     /// 从完整 Cookie 字符串中提取凭据、保存并验证连接

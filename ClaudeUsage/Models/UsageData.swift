@@ -193,11 +193,25 @@ struct UsageSummary: Sendable {
 enum ClaudeAPIError: LocalizedError {
     case invalidCookie
     case unauthorized
+    case oauthTokenExpired
+    case rateLimited
     case networkError(Error)
     case decodingError(Error)
     case serverError(Int)
     case unknownError(String)
     case noOrganizationID
+
+    /// 是否为临时性错误（值得自动重试）
+    var isTransient: Bool {
+        switch self {
+        case .rateLimited, .networkError:
+            return true
+        case .serverError(let code):
+            return code >= 500
+        default:
+            return false
+        }
+    }
 
     var errorDescription: String? {
         switch self {
@@ -205,6 +219,10 @@ enum ClaudeAPIError: LocalizedError {
             return L("error.invalidCookie")
         case .unauthorized:
             return L("error.unauthorized")
+        case .oauthTokenExpired:
+            return L("error.oauthExpired")
+        case .rateLimited:
+            return L("error.rateLimited")
         case .networkError(let error):
             return L("error.network", error.localizedDescription)
         case .decodingError(let error):

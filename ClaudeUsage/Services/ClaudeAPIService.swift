@@ -14,6 +14,8 @@ actor ClaudeAPIService {
     static let shared = ClaudeAPIService()
 
     private let baseURL = "https://claude.ai/api"
+    /// Claude Code OAuth 令牌可访问的用量端点（未公开，与网页版 /usage 返回同构）
+    private let oauthUsageURL = "https://api.anthropic.com/api/oauth/usage"
     private let session: URLSession
 
     private init() {
@@ -26,8 +28,44 @@ actor ClaudeAPIService {
     // MARK: - 用量数据
 
     /// 获取当前用量数据
+    ///
+    /// 优先使用本地 Claude Code 的 OAuth 登录；不可用时回退到手动 Cookie 方式。
     /// - Returns: 用量响应数据
     func fetchUsage() async throws -> UsageResponse {
+        if let token = ClaudeCodeCredentials.currentToken() {
+            return try await withRetry { try await self.fetchUsageViaOAuth(token: token) }
+        }
+        return try await withRetry { try await self.fetchUsageViaCookie() }
+    }
+
+    /// 通过 Claude Code 的 OAuth 令牌获取用量
+    private func fetchUsageViaOAuth(token: ClaudeCodeCredentials.OAuthToken) async throws -> UsageResponse {
+        // 令牌已过期：Claude Code 尚未刷新，直接给出明确提示
+        if token.isExpired {
+            throw ClaudeAPIError.oauthTokenExpired
+        }
+
+        guard let url = URL(string: oauthUsageURL) else {
+            throw ClaudeAPIError.unknownError("无效的 URL: \(oauthUsageURL)")
+        }
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.setValue("Bearer \(token.accessToken)", forHTTPHeaderField: "Authorization")
+        request.setValue("oauth-2025-04-20", forHTTPHeaderField: "anthropic-beta")
+        request.setValue("2023-06-01", forHTTPHeaderField: "anthropic-version")
+        request.setValue("application/json", forHTTPHeaderField: "Accept")
+
+        do {
+            return try await performRequest(request)
+        } catch ClaudeAPIError.unauthorized {
+            // OAuth 端点返回 401 → 令牌失效，提示刷新而非“更新 Cookie”
+            throw ClaudeAPIError.oauthTokenExpired
+        }
+    }
+
+    /// 通过手动配置的 Cookie 获取用量
+    private func fetchUsageViaCookie() async throws -> UsageResponse {
         let orgID = try await getOrganizationID()
         let url = try buildURL(path: "/organizations/\(orgID)/usage")
         let request = try await buildRequest(url: url)
@@ -55,6 +93,30 @@ actor ClaudeAPIService {
         let url = try buildURL(path: "/organizations")
         let request = try await buildRequest(url: url)
         return try await performRequest(request)
+    }
+
+    // MARK: - 重试
+
+    /// 对临时性错误（429 / 5xx / 网络抖动）做带退避的自动重试。
+    /// 认证类错误（401/403、令牌过期）不重试，直接抛出。
+    private func withRetry<T: Sendable>(
+        maxAttempts: Int = 3,
+        _ operation: @Sendable () async throws -> T
+    ) async throws -> T {
+        var lastError: Error?
+        for attempt in 0..<maxAttempts {
+            do {
+                return try await operation()
+            } catch let error as ClaudeAPIError where error.isTransient {
+                lastError = error
+                // 退避: 0.5s, 1s, ...（最后一次失败不再等待）
+                if attempt < maxAttempts - 1 {
+                    let delay = UInt64(0.5 * Double(1 << attempt) * 1_000_000_000)
+                    try? await Task.sleep(nanoseconds: delay)
+                }
+            }
+        }
+        throw lastError ?? ClaudeAPIError.unknownError("重试失败")
     }
 
     // MARK: - 内部方法
@@ -121,6 +183,8 @@ actor ClaudeAPIService {
             break
         case 401, 403:
             throw ClaudeAPIError.unauthorized
+        case 429:
+            throw ClaudeAPIError.rateLimited
         case 400...499:
             throw ClaudeAPIError.serverError(httpResponse.statusCode)
         case 500...599:

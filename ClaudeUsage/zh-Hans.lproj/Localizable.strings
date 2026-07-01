@@ -5,6 +5,9 @@
 "settings.title" = "设置";
 "settings.auth.title" = "认证信息";
 "settings.auth.cookie" = "Cookie";
+"settings.auth.cookie.optional" = "Cookie（可选）";
+"settings.auth.claudeCode.detected" = "已检测到 Claude Code 登录";
+"settings.auth.claudeCode.hint" = "正在使用本地 Claude Code 凭据，无需手动配置 Cookie。令牌由 Claude Code 自动刷新。";
 "settings.auth.cookie.placeholder" = "粘贴完整 Cookie 字符串...";
 "settings.auth.cookie.hint1" = "浏览器登录 claude.ai → 开发者工具 → Cookie → 复制全部";
 "settings.auth.cookie.hint2" = "自动提取 sessionKey 和 lastActiveOrg";
@@ -60,6 +63,8 @@
 // 错误信息
 "error.invalidCookie" = "Cookie 无效，请重新设置";
 "error.unauthorized" = "认证已过期，请更新 Cookie";
+"error.oauthExpired" = "Claude Code 登录已过期，请在终端运行一次 claude 以刷新登录";
+"error.rateLimited" = "请求过于频繁，请稍后再试";
 "error.network" = "网络错误：%@";
 "error.decoding.keyNotFound" = "数据解析错误：缺少字段 \"%@\" (%@)";
 "error.decoding.typeMismatch" = "数据解析错误：类型不匹配 %@ (%@)";
