@@ -18,6 +18,12 @@ actor ClaudeAPIService {
     private let oauthUsageURL = "https://api.anthropic.com/api/oauth/usage"
     private let session: URLSession
 
+    /// 诚实的应用标识 User-Agent（不伪装浏览器，避免被误判为会话劫持）
+    private static let userAgent: String = {
+        let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "1.0"
+        return "ClaudeUsage/\(version) (macOS; menu-bar usage monitor)"
+    }()
+
     private init() {
         let config = URLSessionConfiguration.default
         config.timeoutIntervalForRequest = 30
@@ -55,6 +61,7 @@ actor ClaudeAPIService {
         request.setValue("oauth-2025-04-20", forHTTPHeaderField: "anthropic-beta")
         request.setValue("2023-06-01", forHTTPHeaderField: "anthropic-version")
         request.setValue("application/json", forHTTPHeaderField: "Accept")
+        request.setValue(Self.userAgent, forHTTPHeaderField: "User-Agent")
 
         do {
             return try await performRequest(request)
@@ -144,7 +151,7 @@ actor ClaudeAPIService {
         request.httpMethod = "GET"
         request.setValue(cookieValue, forHTTPHeaderField: "Cookie")
         request.setValue("application/json", forHTTPHeaderField: "Accept")
-        request.setValue("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36", forHTTPHeaderField: "User-Agent")
+        request.setValue(Self.userAgent, forHTTPHeaderField: "User-Agent")
 
         return request
     }

@@ -17,13 +17,16 @@ import Foundation
 import Security
 
 /// 读取 Claude Code 登录凭据（OAuth 令牌）
-enum ClaudeCodeCredentials {
+///
+/// 纯 Keychain 读取，无共享可变状态；标记 `nonisolated` 使其可从任意隔离域
+/// （如 `ClaudeAPIService` 这个 actor）安全调用，避免默认 MainActor 隔离带来的编译错误。
+nonisolated enum ClaudeCodeCredentials {
 
     /// Claude Code 在钥匙串中使用的 service 名称
     private static let service = "Claude Code-credentials"
 
     /// 解析后的 OAuth 令牌
-    struct OAuthToken: Sendable {
+    nonisolated struct OAuthToken: Sendable {
         let accessToken: String
         /// 过期时间；无法解析时为 nil
         let expiresAt: Date?
